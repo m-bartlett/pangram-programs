@@ -4,8 +4,8 @@
 <center><sub> <i>for the purposes of this repository.</i> </sub></center>
 
 
-In short, an ideal pangram program should strive to exhaustively implement, instantiate, invoke, or however otherwise expose as valid source code (**commented or plain string content doesn't count!**) that gets parsed by an interpretter and/or compiler for a given programming language the following features of said language:
-* Reserved and/or key words that cannot be used for variable or subroutine names (commonly words like `if`, `else`, `return`, etc.)
+In short, an ideal pangram program should strive to exhaustively implement, instantiate, invoke, or however otherwise expose as valid source code (**commented or plain string content doesn't count!**) that gets parsed by an interpreter and/or compiler for a given programming language the following features of said language:
+* Reserved and/or keywords that cannot be used for variable or subroutine names (commonly words like `if`, `else`, `return`, etc.)
 * Objects of all class-types (if the language is typed) implemented in the **standard libraries** of a given language (that is, the libraries that come out of box with a default installation)
   * This includes making calls to each public method and referencing all public variables of each distinctly-classed object.
 * All "n-ary" symbolic operators (e.g. =, >, !, &&, etc.)
@@ -17,7 +17,7 @@ In short, an ideal pangram program should strive to exhaustively implement, inst
 
 Notice I said "ideal" above, as this is a tall order to implement in some languages. The rule of thumb is, if you make a reasonable effort and represent the decent majority of a language's features then it will suffice&mdash;this is intended to be more fun than it is rigorous :)
 
->**Note**: it is perfectly valid if your pangram program itself is generated programmtically, just please include the generator code and an invokation of it in the validation executabutable explained below.
+>**Note**: it is perfectly valid if your pangram program itself is generated programmatically, just please include the generator code and an invocation of it in the validation executable explained below.
 
 
 ## Pangram Module Directory Structure
@@ -50,7 +50,7 @@ In order for a pangram module to be deemed valid in this repository, it should m
 
 * `<language-root-directory>/<pangram-directory>`
 
-    This is where the magic happens. Please name this as descriptively but succinctly as reasonably possible. For example, my Python sample is [`/python/all-keywords-builtins-operators`](/python/all-keywords-builtins-operators/README.md)
+    This is where the magic happens. Please name this as descriptively but succinctly as reasonably possible. For example, my Python sample is [`/python/all-keywords-builtins-operators`](/python/all-keywords-builtins-operators-3.9/README.md)
   
 * `<language-root-directory>/<pangram-directory>/README.md`
 
@@ -66,4 +66,4 @@ In order for a pangram module to be deemed valid in this repository, it should m
     
 * `<language-root-directory>/<pangram-directory>/validate`
 
-    This should be an executable, such as a shell script, that scans the cleartext of your pangram and somehow verifies it is lexically exhaustive of some aspect of the language. In the case of Python this is relatively easy since Python exposes methods to get lists of keywords and "builtins" as strings. Other languages may require consulting reference manuals or other documentation to get such a list. If that is necessary, please include links to those documents (or better yet, scrape them programmatically!). This sript should make sure all the language lexemes are present in the source code (and not just as comments!).
+    This should be an executable, such as a shell script, that scans the cleartext of your pangram and somehow verifies it is lexically exhaustive of some aspect of the language. In the case of Python this is relatively easy since Python exposes methods to get lists of keywords and "builtins" as strings. Other languages may require consulting reference manuals or other documentation to get such a list. If that is necessary, please include links to those documents (or better yet, scrape them programmatically!). This script should make sure all the language lexemes are present in the source code (and not just as comments!).
