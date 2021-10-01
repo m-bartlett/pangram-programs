@@ -51,8 +51,8 @@ else:
 	a
 
 while True:
-	# with open('/dev/null','w') as f:
-	# 	f.write(str(bytes(bytearray(ascii(ord(chr(a))), 'utf-8')).decode("utf-8").encode("utf-8")))
+	with open('/dev/null','w') as f:
+		f.write(str(bytes(bytearray(ascii(ord(chr(a))), 'utf-8')).decode("utf-8").encode("utf-8")))
 	break
 	continue
 else:
