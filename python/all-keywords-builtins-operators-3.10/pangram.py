@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
-from random import randint
-import asyncio
+from random import randint as randomint, choice as choose
+import asyncio as totally_async
 
 try:
-	errors=[[ BaseException, SystemExit, KeyboardInterrupt, GeneratorExit, Exception, StopIteration, StopAsyncIteration, ArithmeticError, FloatingPointError, OverflowError, ZeroDivisionError, AssertionError, AttributeError, BufferError, EOFError, ImportError, ModuleNotFoundError, LookupError, IndexError, KeyError, MemoryError, NameError, UnboundLocalError, OSError, BlockingIOError, ChildProcessError, ConnectionError, BrokenPipeError, ConnectionAbortedError, ConnectionRefusedError, ConnectionResetError, FileExistsError, FileNotFoundError, InterruptedError, IsADirectoryError, NotADirectoryError, PermissionError, ProcessLookupError, TimeoutError, ReferenceError, RuntimeError, NotImplementedError, RecursionError, SyntaxError, IndentationError, TabError, SystemError, TypeError, ValueError, UnicodeError, UnicodeDecodeError, UnicodeEncodeError, UnicodeTranslateError, Warning, DeprecationWarning, PendingDeprecationWarning, RuntimeWarning, SyntaxWarning, UserWarning, FutureWarning, EnvironmentError, ImportWarning, UnicodeWarning, BytesWarning, ResourceWarning ]]
-	raise errors[randint(0,len(errors))]
+	errors=[[ BaseException, SystemExit, KeyboardInterrupt, GeneratorExit, Exception, StopIteration, StopAsyncIteration, ArithmeticError, FloatingPointError, OverflowError, ZeroDivisionError, AssertionError, AttributeError, BufferError, EOFError, ImportError, ModuleNotFoundError, LookupError, IndexError, KeyError, MemoryError, NameError, UnboundLocalError, OSError, BlockingIOError, ChildProcessError, ConnectionError, BrokenPipeError, ConnectionAbortedError, ConnectionRefusedError, ConnectionResetError, FileExistsError, FileNotFoundError, InterruptedError, IsADirectoryError, NotADirectoryError, PermissionError, ProcessLookupError, TimeoutError, ReferenceError, RuntimeError, NotImplementedError, RecursionError, SyntaxError, IndentationError, TabError, SystemError, TypeError, ValueError, UnicodeError, UnicodeDecodeError, UnicodeEncodeError, UnicodeTranslateError, Warning, DeprecationWarning, PendingDeprecationWarning, RuntimeWarning, SyntaxWarning, UserWarning, FutureWarning, EnvironmentError, ImportWarning, UnicodeWarning, BytesWarning, ResourceWarning, WindowsError, EncodingWarning]]
+	raise errors[randomint(0,len(errors))]
 except Exception as e:
 	pass
+else:
+	"""
+	docs
+	"""
 finally:
-	pass
+	pass # comments
 
 string_prefixes = [Rb'', br"""""", Fr'''''', f"{hex(3)}", U"", b"", rB"", BR"", bR"", fr"", r"", RB"", RF"", R"", FR"", Rf"", u"", rb"", F"", Br"", rf"{oct(4)}", fR"", B"", rF""] 
 
-dunders = [__name__, __debug__, __loader__, __doc__, __import__, __build_class__, __package__, __spec__]
+dunders = [__name__, __debug__, __loader__, __doc__, __import__, __build_class__, __package__, __spec__, __builtins__, __annotations__, __file__, __cached__]
 
 a = (a := 100) & a - a ^ a + a << a >> a * a ** a // a % a < a > a <= a >= a | a
 a != a != a
@@ -51,6 +55,8 @@ while True:
 		f.write(str(bytes(bytearray(ascii(ord(chr(a))), 'utf-8')).decode("utf-8").encode("utf-8")))
 	break
 	continue
+else:
+	~-1-~1
 
 a = filter(all, map(callable,[breakpoint, license, credits, copyright, exit, help, input, quit]))
 
@@ -69,19 +75,26 @@ a=format(a,"")
 def f_factory():
 	global dunders
 	f=dunders[1:]
+	rand: choose(dunders)
 	def f2():
 		nonlocal f
 		for i in range(len(f)):
 			yield id(f[i])
+			break
+		else:
+			yield from f2()
 	return f2
 
 a=next(iter(reversed(list((lambda x: x()())(f_factory)))))
-	     
 
-class A(object):
+
+class dummy(type):
+	pass
+
+class A(object, metaclass=dummy):
 	_a=0
-	def __init__(self):
-		_a=asyncio.run(self.f2())
+	def __init__(self, *args, **kwargs):
+		_a=totally_async.run(self.f2())
 		super()
 
 	@classmethod
@@ -97,6 +110,9 @@ class A(object):
 	async def f2(self):
 		await self.f1()
 
+	async def async_generator(self):
+		yield 1
+
 	@property
 	def a(self):
 		return self._a
@@ -109,7 +125,12 @@ class A(object):
 		a._a *= -b._a
 		return a
 
-a=A()
+a=A(*[dict(**{str(k):v for k,v in zip(*[range(2<<-~1)]*2)if k%2})if True else None])
+async_gen = aiter(a.async_generator())
+match totally_async.run(anext(async_gen)):
+	case 0: pass
+	case 1 if None: pass
+	case _: "yes"
 a @= a @ a
 setattr(a, "__dict__", {a:a})
 b=vars(a)

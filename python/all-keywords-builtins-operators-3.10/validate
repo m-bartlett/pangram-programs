@@ -1,0 +1,100 @@
+#!/usr/bin/env python3
+initial_globals = list(globals())
+from keyword import kwlist, softkwlist
+import operator
+import re
+
+PANGRAM_FILE = "pangram.py"
+
+errors = set()
+dunders = set()
+builtin_functions = set()
+
+all_inbuilt_stuff = dir(__builtins__)
+stage = 0
+for inbuilt_stuff in all_inbuilt_stuff:
+    match stage:
+        case 0 if inbuilt_stuff.startswith('_'): stage = 1
+        case 0: errors.add(inbuilt_stuff)
+        case 1 if not inbuilt_stuff.startswith('_'): stage = 2
+        case 1: dunders.add(inbuilt_stuff)
+        case 2: builtin_functions.add(inbuilt_stuff)
+
+remaining = set()
+for premade in initial_globals:
+    if not hasattr(__builtins__, premade):
+        match premade:
+            case x if x.startswith('_'): dunders.add(x)
+            case _: remaining.add(premade)
+
+
+operators = {'~', ':='}
+operator_regex = re.compile(r'^Same as (.+)\.$')
+for method in operator.__all__:
+    docs = operator_regex.findall(getattr(operator, method).__doc__)
+    docs = docs[0] if docs else ''
+    if docs.endswith('a') or docs.endswith('b'):
+        docs = re.sub('([a-z ])', '', docs.lower()).strip()
+        if docs: operators.add(docs)
+
+
+basic_literals = {
+    'string': {"'", "'''", '"', '"""'},
+    'comment': {'#'},
+    'annotation': {'->'},
+    'metaclass': {"metaclass"}
+}
+
+
+class TestPangram:
+    def setUp(self):
+        with open(PANGRAM_FILE) as file:
+            self.data = file.read()
+
+    def test_has_all_keywords(self):
+        for keyword in kwlist + softkwlist:
+            if keyword not in self.data:
+                print(f"Keyword \"{keyword}\" not used.")
+
+    def test_has_all_errors(self):
+        for error in errors:
+            if error not in self.data:
+                print(f"Error \"{error}\" not used.")
+
+    def test_has_all_dunders(self):
+        for dunder in dunders:
+            if dunder not in self.data:
+                print(f"Dunder \"{dunder}\" not used.")
+
+    def test_has_all_functions(self):
+        for function in builtin_functions:
+            if function not in self.data:
+                print(f"Function \"{function}\" not used")
+
+    def test_remaining(self):
+        for pre_existing in remaining:
+            if pre_existing not in self.data:
+                print(f"Pre-Existing \"{pre_existing}\" not used")
+
+    def test_operators(self):
+        for _operator in operators:
+            if _operator not in self.data:
+                print(f"Operator \"{_operator}\" not used")
+
+    def test_basic_literals(self):
+        for literal_name, literals in basic_literals.items():
+            for literal in literals:
+                if literal not in self.data:
+                    print(f"{literal_name.title()} literal ({literal}) not used")
+
+
+if __name__ == '__main__':
+    tester = TestPangram()
+    tester.setUp()
+    tester.test_has_all_keywords()
+    tester.test_has_all_functions()
+    tester.test_has_all_dunders()
+    tester.test_has_all_errors()
+    tester.test_remaining()
+    tester.test_operators()
+    tester.test_basic_literals()

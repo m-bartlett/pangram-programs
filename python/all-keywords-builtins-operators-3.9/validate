@@ -19,6 +19,7 @@ python_lexemes = set()
 # Get keywords, i.e. reserved words
 for kw in keyword.kwlist:
 	python_lexemes.add(kw)
+python_lexemes.discard('__peg_parser__')
 
 # Get builtin function names like "len" and "sorted"
 for bi in __builtins__.__dict__.keys():
